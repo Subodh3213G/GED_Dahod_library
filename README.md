@@ -90,6 +90,26 @@ Once the server is running, anyone on the college network can access it by visit
 
 ---
 
+## 🐳 Docker Deployment (No Python Required)
+
+If you don't have Python installed, or prefer deploying via containers, you can use Docker.
+
+1. **Build the Docker Image:**
+   Open a terminal in the project directory where the `Dockerfile` is located and run:
+   ```bash
+   docker build -t library-system .
+   ```
+
+2. **Run the Container:**
+   Once built, start the server and map port 800:
+   ```bash
+   docker run -p 800:800 --name library-container library-system
+   ```
+
+The application is now containerized and accessible at `http://localhost:800` (or your server's IP).
+
+---
+
 ## Bulk Import Data (Students & Books)
 
 You can easily bulk import students and books from standard `.csv` files using our custom management command `import_data`. This is built for fast ingestion while automatically checking for and skipping duplicate entries.

@@ -20,4 +20,4 @@ if __name__ == '__main__':
             print("\n Tip: Port 80 requires 'Administrator' privileges.")
             print("Try running your terminal as Administrator, or change port to 8080.")
         sys.exit(1)
-        
+

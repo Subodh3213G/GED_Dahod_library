@@ -4,7 +4,7 @@ from .models import Student, Book, LibraryLog, Transaction
 
 
 # ── Customize Admin Site Branding ───────────────────────────
-admin.site.site_header = '📚 GECDahod Library'
+admin.site.site_header = 'GECDahod Library'
 admin.site.site_title = 'GECDahod Library Admin'
 admin.site.index_title = 'Library Management Panel'
 

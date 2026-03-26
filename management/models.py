@@ -136,7 +136,7 @@ class Transaction(models.Model):
             self.due_date = timezone.now() + timedelta(days=15)
         super().save(*args, **kwargs)
 
-    @property
+    @property  #@=decorator
     def is_overdue(self):
         return not self.returned and timezone.now() > self.due_date
 

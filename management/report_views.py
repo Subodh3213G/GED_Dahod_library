@@ -15,7 +15,7 @@ def reports_dashboard(request):
         'title': 'Download Reports',
         'departments': departments,
         'is_nav_sidebar_enabled': True,
-        'site_header': '📚 Smart College Library',
+        'site_header': ' Smart College Library',
         'has_permission': True,
     }
     return TemplateResponse(request, 'admin/reports_dashboard.html', context)

@@ -1,8 +1,8 @@
-# 📤 Bulk Data Import Guide
+#  Bulk Data Import Guide
 
 This guide explains how to import large amounts of Student and Book data into the GECDahod Library System using CSV files.
 
-## 📋 1. Preparing your CSV Files
+##  1. Preparing your CSV Files
 
 You must use a `.csv` format. You can create these in Microsoft Excel and use "Save As -> CSV (Comma delimited)".
 
@@ -31,7 +31,7 @@ You must use a `.csv` format. You can create these in Microsoft Excel and use "S
 **Example Row:**
 `BK-001,Introduction to Algorithms,Cormen,A-1`
 
-## 🚀 2. Running the Import Commands
+##  2. Running the Import Commands
 
 Open your terminal (PowerShell or CMD) in the project folder and run:
 
@@ -45,7 +45,7 @@ python manage.py import_data students "C:\path\to\your\students.csv"
 python manage.py import_data books "C:\path\to\your\books.csv"
 ```
 
-## ⚠️ Important Rules & Tips
+##  Important Rules & Tips
 
 1. **Duplicate Detection**: The system will automatically check if an `enrollment_id` or `access_code` already exists. It will skip duplicates and show a warning, so you don't have to worry about adding the same data twice.
 2. **Exact Headers**: The first row of your CSV **must** match the headers mentioned above exactly (lowercase).

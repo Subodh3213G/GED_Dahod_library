@@ -56,5 +56,62 @@ def api_sitemap(request):
             "entry_exit_report": "/admin/reports/entry-exit/",
             "book_issues_report": "/admin/reports/book-issues/",
             "overdue_report": "/admin/reports/overdue-students/"
+        },
+        "User Auth Endpoints": {
+            "register": "/api/register/",
+            "login": "/api/login/",
+            "logout": "/api/logout/",
+            "update_password": "/api/update-password/",
+            "delete_account": "/api/delete/"
         }
     }, status=status.HTTP_200_OK)
+
+from django.contrib.auth.models import User
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
+from .serializers import RegisterSerializer, ChangePasswordSerializer
+
+class RegisterView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = RegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "User registered successfully."}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response({"message": "Successfully logged out."}, status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response({"error": "Invalid token or no token provided.", "details": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+class ChangePasswordView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = ChangePasswordSerializer(data=request.data)
+        if serializer.is_valid():
+            user = request.user
+            if user.check_password(serializer.data.get("old_password")):
+                user.set_password(serializer.data.get("new_password"))
+                user.save()
+                return Response({"message": "Password updated successfully."}, status=status.HTTP_200_OK)
+            return Response({"error": "Incorrect old password."}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class DeleteUserView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request):
+        user = request.user
+        user.delete()
+        return Response({"message": "User account deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
